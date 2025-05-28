@@ -1,0 +1,144 @@
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.side-bar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 15px 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.logo {
+  max-width: 89px;
+  object-fit: cover;
+}
+
+.menu-btn {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 14px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-btn div {
+  background-color: #B7B9BB;
+  height: 2px;
+  width: 100%;
+}
+
+.menu-btn div::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #B7B9BB;
+  bottom: 0;
+  left: 0;
+}
+
+.menu-btn div::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #B7B9BB;
+  top: 0;
+  left: 0;
+}
+
+.side-bar__main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+.side-bar__category {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-bar__list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.side-bar__list-link {
+  text-decoration: none;
+  color: #333333;
+  font-size: 14px;
+  line-height: 100%;
+  font-weight: 600;
+  padding: 12px 15px 13px 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.side-bar__list-link:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.side-bar__list-link-text {
+  padding: 0;
+  margin: 0 0 0 10px;
+}
+
+.side-bar__category-heading {
+  color: #B7B9BB;
+  font-size: 12px;
+  line-height: 100%;
+  font-weight: 700;
+  margin: 0 0 5px 15px;
+}
+
+.side-bar__list-link-marker {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #8BC34A;
+}
+
+.side-bar__list-link-marker--blue {
+  background-color: #03A9F4;
+}
+
+.side-bar__category-btn {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: #B7B9BB;
+  font-size: 12px;
+  line-height: 100%;
+  font-weight: 400;
+  padding: 0 0 0 13px;
+  margin: 8px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  max-width: 158px;
+}
