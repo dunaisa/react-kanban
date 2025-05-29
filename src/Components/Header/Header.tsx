@@ -14,7 +14,7 @@ const Header = ({ board }: HeaderProps) => {
       <div className='header__nav'>
         <div className='header__nav-page'>
           <span className='header__page-name'>
-            {!board ? 'Не выбрано' : board.category}
+            {!board ? 'Электротовары' : board.category}
           </span>
           <span className='header__page-status'>
             В работе

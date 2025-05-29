@@ -16,6 +16,7 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ boards, onBoardSelect }: SidebarProps) => {
+
   return (
     <div className='side-bar'>
       <div className='side-bar__header'>
@@ -60,7 +61,7 @@ const Sidebar = ({ boards, onBoardSelect }: SidebarProps) => {
 
             {boards.map((board) => (
               <li className='side-bar__list-item' key={board.id}>
-                <Link to={`/favorites/${board.category}`} className='side-bar__list-link' onClick={() => onBoardSelect(board.id)}>
+                <Link to={!board.category ? '/favorites/Электротовары/kanban' : `/favorites/${board.category}/kanban`} className='side-bar__list-link' onClick={() => onBoardSelect(board.id)}>
                   <div className='side-bar__list-link-marker'></div>
                   <span className='side-bar__list-link-text'>{board.category}</span>
                 </Link>
