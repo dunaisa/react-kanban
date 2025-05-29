@@ -10,7 +10,7 @@ type HeaderProps = {
 const Header = ({ board }: HeaderProps) => {
 
   return (
-    <header className='header'>
+    <div className='header'>
       <div className='header__nav'>
         <div className='header__nav-page'>
           <span className='header__page-name'>
@@ -78,7 +78,7 @@ const Header = ({ board }: HeaderProps) => {
 
       </div>
       
-    </header>
+    </div>
   );
 }
 

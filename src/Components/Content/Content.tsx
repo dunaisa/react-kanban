@@ -1,6 +1,16 @@
+// import { Column } from '../../types/types';
 import './Content.css'
+import Column from '../Column/Column';
+import { Column as ColumnType } from '@/types/types';
 
-const Content = () => {
+type contentProps = {
+  handleAddColumn: () => void;
+  columns: ColumnType[];
+  onChangeColumnTitle: (id: number, title: string) => void;
+}
+
+const Content = ({handleAddColumn, columns, onChangeColumnTitle}: contentProps) => {
+
   return (
     <div className="content">
       <div className="content__wrapper">
@@ -27,6 +37,29 @@ const Content = () => {
           </div>
         </div>
         <div className='content__columns'>
+          <div className='content__columns-wrapper'>
+
+            {
+              columns.map((col) => (
+                <Column key={col.id} column={col} onChangeColumnTitle={onChangeColumnTitle}/>
+              ))
+            }
+            
+            
+
+            <div className='content__columns-add'>
+              <button className='content__columns-btn' onClick={handleAddColumn}>
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 4.5H0.75M4.5 0.75V4.5V0.75ZM4.5 4.5V8.25V4.5ZM4.5 4.5H8.25H4.5Z" stroke="#333333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span className='content__columns-btn-text'>
+                  Добавить столбец
+                </span>
+              </button>
+
+            </div>
+
+          </div>
 
         </div>
 
