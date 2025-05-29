@@ -7,7 +7,7 @@ import MainLayout from '../MainLayout/MainLayout'
 import { boardsData } from '../../data/boardsData';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { store, useAppDispatch, RootState } from '../../store/store';
-import { addColumn, updateColumnTitle, removeColumn } from '../../store/slices/columnsSlice';
+import { addColumn, updateColumnTitle, removeColumn, addTask } from '../../store/slices/columnsSlice';
 import { useSelector } from 'react-redux';
 
 function App() {
@@ -33,6 +33,10 @@ function App() {
     dispatch(removeColumn({ id }));
   };
 
+  const handleAddTask = () => {
+    dispatch(addTask());
+  };
+
   return (
     <div className='page'>
       <Sidebar boards={boardsData} onBoardSelect={setSelectedBoardId}/>
@@ -40,7 +44,13 @@ function App() {
       <MainLayout>
 
         <Header board={selectedBoard} />
-        <Content handleAddColumn={handleAddColumn} columns={columns} onChangeColumnTitle={handleChangeColumnTitle} deleteColumn={handleRemoveColumn}/>
+        <Content 
+          handleAddColumn={handleAddColumn}
+          columns={columns}
+          onChangeColumnTitle={handleChangeColumnTitle}
+          deleteColumn={handleRemoveColumn}
+          addTask={handleAddTask}
+          />
 
       </MainLayout>
 

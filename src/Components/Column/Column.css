@@ -71,17 +71,32 @@
   top: 50%;
   transform: translateY(-50%);
   right: 150%;
-  text-align: center;
   background-color: #ffffff;
   max-width: min-content;
   padding: 5px 10px;
   border-radius: 10px;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  transition: 0.3s;
+}
+
+.column__btn-popup:hover {
+  border: 1px solid #333333;
 }
 
 .column__btn-popup-text {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 100%;
   font-weight: 400;
   color: #333333;
+}
+
+.column__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
 }
