@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { reloadColumns } from '../store/slices/columnsSlice';
 import { RootState } from '../store/store';
@@ -7,11 +7,9 @@ export const useLocalStorage = () => {
   const dispatch = useDispatch();
   const columns = useSelector((state: RootState) => state.columns.columns);
 
-  // При монтировании компонента — загружаем данные из localStorage
+  const isInitialLoad = useRef(true);
 
-  useEffect(() => {
-    localStorage.setItem('kanban-columns', JSON.stringify(columns));
-  }, [columns]);
+  // При монтировании компонента — загружаем данные из localStorage
   
   useEffect(() => {
     const savedColumns = localStorage.getItem('kanban-columns');
@@ -28,6 +26,10 @@ export const useLocalStorage = () => {
   // При любом изменении колонок — сохраняем в localStorage
 
   useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
     localStorage.setItem('kanban-columns', JSON.stringify(columns));
   }, [columns]);
 }

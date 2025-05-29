@@ -29,18 +29,9 @@ function App() {
     dispatch(updateColumnTitle({ id, title }));
   };
 
-  // const handleUpdateColumnName = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(updateColumnTitle({
-  //     id: column.id,
-  //     title: e.target.value,
-  //   }));
-  // };
-
-  // const handleRemoveColumn = (id: number) => {
-  //   if (window.confirm('Удалить колонку?')) {
-  //     dispatch(removeColumn({ id }));
-  //   }
-  // };
+  const handleRemoveColumn = (id: number) => {
+    dispatch(removeColumn({ id }));
+  };
 
   return (
     <div className='page'>
@@ -49,7 +40,7 @@ function App() {
       <MainLayout>
 
         <Header board={selectedBoard} />
-        <Content handleAddColumn={handleAddColumn} columns={columns} onChangeColumnTitle={handleChangeColumnTitle}/>
+        <Content handleAddColumn={handleAddColumn} columns={columns} onChangeColumnTitle={handleChangeColumnTitle} deleteColumn={handleRemoveColumn}/>
 
       </MainLayout>
 

@@ -7,9 +7,10 @@ type contentProps = {
   handleAddColumn: () => void;
   columns: ColumnType[];
   onChangeColumnTitle: (id: number, title: string) => void;
+  deleteColumn: (id: number) => void;
 }
 
-const Content = ({handleAddColumn, columns, onChangeColumnTitle}: contentProps) => {
+const Content = ({handleAddColumn, columns, onChangeColumnTitle, deleteColumn}: contentProps) => {
 
   return (
     <div className="content">
@@ -41,7 +42,7 @@ const Content = ({handleAddColumn, columns, onChangeColumnTitle}: contentProps) 
 
             {
               columns.map((col) => (
-                <Column key={col.id} column={col} onChangeColumnTitle={onChangeColumnTitle}/>
+                <Column key={col.id} column={col} onChangeColumnTitle={onChangeColumnTitle} deleteColumn={deleteColumn} />
               ))
             }
             
