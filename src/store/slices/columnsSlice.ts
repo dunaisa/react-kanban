@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Column, ColumnsState, Task } from '../../types/types';
+import { Column, ColumnsState } from '../../types/types';
 
 const initialState: ColumnsState = {
   columns: [],
@@ -35,27 +35,30 @@ const columnsSlice = createSlice({
       state.columns = action.payload.columns;
     },
     
-    // обновить название задачи
-    updateNewTaskTitle: (state,action: PayloadAction<{ columnId: number; taskTitle: string }>) => {
-      state.newTasks[action.payload.columnId] = action.payload.taskTitle;
-    },
     // добавить задачу
     addTask: (state, action: PayloadAction<{columnId: number}>) => {
       const column = state.columns.find(col => col.id === action.payload.columnId);
-      const title = state.newTasks[action.payload.columnId];
 
-      if (column && title) {
+      if (column) {
         column.tasks.push({
           id: Date.now(),
-          title,
+          title: '',
         });
-        // очистка поля ввода
-        delete state.newTasks[action.payload.columnId];
+      }
+    },
+    // обновить название задачи
+    updateNewTaskTitle: (state,action: PayloadAction<{ columnId: number; taskId: number; taskTitle: string }>) => {
+      const column = state.columns.find(col => col.id === action.payload.columnId);
+      if (column) {
+        const task = column.tasks.find(task => task.id === action.payload.taskId);
+        if (task) {
+          task.title = action.payload.taskTitle;
+        }
       }
     },
   }
 })
 
-export const { addColumn, updateColumnTitle, removeColumn, reloadColumns, addTask } = columnsSlice.actions;
+export const { addColumn, updateColumnTitle, removeColumn, reloadColumns, addTask, updateNewTaskTitle } = columnsSlice.actions;
 
 export default columnsSlice.reducer;

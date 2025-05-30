@@ -1,14 +1,34 @@
+import { useRef } from 'react';
 import './Task.css'
 
-const Task = () => {
+type TaskProps = {
+  taskId: number;
+  columnId: number;
+  taskTitle: string;
+  onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
+};
+
+const Task = ({columnId, taskId, taskTitle, onChangeTaskTitle} : TaskProps) => {
+
+  const spanRef = useRef<HTMLSpanElement>(null);
+
+  const handleBlur = () => {
+    const newTitle = spanRef.current.innerText.trim();
+    onChangeTaskTitle(columnId, taskId, newTitle);
+  }
+
   return (
       <div className='task'>
         <div className='task__heading'>
-          <input 
-          className='task__name' 
-          type='text'
-          placeholder='Напишите название задачи...'
-          />
+
+          <span
+            ref={spanRef}
+            className='task__name'
+            contentEditable="true"
+            data-placeholder="Напишите название задачи..."
+            onBlur={handleBlur}>
+              {taskTitle.trim() === '' ? null : taskTitle}
+          </span>
         </div>
         <div className='task__info'>
 

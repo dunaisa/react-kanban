@@ -7,7 +7,7 @@ import MainLayout from '../MainLayout/MainLayout'
 import { boardsData } from '../../data/boardsData';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { store, useAppDispatch, RootState } from '../../store/store';
-import { addColumn, updateColumnTitle, removeColumn, addTask } from '../../store/slices/columnsSlice';
+import { addColumn, updateColumnTitle, removeColumn, addTask, updateNewTaskTitle } from '../../store/slices/columnsSlice';
 import { useSelector } from 'react-redux';
 
 function App() {
@@ -33,8 +33,12 @@ function App() {
     dispatch(removeColumn({ id }));
   };
 
-  const handleAddTask = () => {
-    dispatch(addTask());
+  const handleAddTask = (columnId: number) => {
+    dispatch(addTask({ columnId }));
+  };
+
+  const handleChangeTaskTitle = (columnId: number, taskId: number, taskTitle: string) => {
+    dispatch(updateNewTaskTitle({ columnId, taskId, taskTitle }));
   };
 
   return (
@@ -50,6 +54,7 @@ function App() {
           onChangeColumnTitle={handleChangeColumnTitle}
           deleteColumn={handleRemoveColumn}
           addTask={handleAddTask}
+          onChangeTaskTitle={handleChangeTaskTitle}
           />
 
       </MainLayout>

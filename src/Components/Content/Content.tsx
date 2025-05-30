@@ -8,10 +8,11 @@ type contentProps = {
   columns: ColumnType[];
   onChangeColumnTitle: (id: number, title: string) => void;
   deleteColumn: (id: number) => void;
-  addTask: (columnId: number, title: string) => void;
+  addTask: (columnId: number) => void;
+  onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
 }
 
-const Content = ({handleAddColumn, columns, onChangeColumnTitle, deleteColumn}: contentProps) => {
+const Content = ({handleAddColumn, columns, onChangeColumnTitle, deleteColumn, addTask, onChangeTaskTitle}: contentProps) => {
 
   return (
     <div className="content">
@@ -49,6 +50,7 @@ const Content = ({handleAddColumn, columns, onChangeColumnTitle, deleteColumn}: 
                   onChangeColumnTitle={onChangeColumnTitle}
                   deleteColumn={deleteColumn}
                   addTask={addTask}
+                  onChangeTaskTitle={onChangeTaskTitle}
                   />
               ))
             }

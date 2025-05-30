@@ -7,10 +7,11 @@ type ColumnProps = {
   column: ColumnType;
   onChangeColumnTitle: (id: number, title: string) => void;
   deleteColumn: (id: number) => void;
-  addTask: (id: number, title: string) => void;
+  addTask: (id: number) => void;
+  onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
 };
 
-const Column = ({column, onChangeColumnTitle, deleteColumn, addTask} : ColumnProps) => {
+const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTaskTitle} : ColumnProps) => {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -29,6 +30,8 @@ const Column = ({column, onChangeColumnTitle, deleteColumn, addTask} : ColumnPro
   const handleAddTask = () => {
     addTask(column.id)
   }
+
+  
   
   return (
     <div className='column'>
@@ -67,9 +70,17 @@ const Column = ({column, onChangeColumnTitle, deleteColumn, addTask} : ColumnPro
       </div>
 
       <div className='column__tasks'>
-        <Task />
-      </div>
-      
+
+        {column.tasks.map(task => (
+          <Task
+            key={task.id}
+            taskId={task.id}
+            taskTitle={task.title}
+            columnId={column.id}
+            onChangeTaskTitle={onChangeTaskTitle}
+          />
+        ))}
+      </div>      
 
     </div>
   );

@@ -1,11 +1,11 @@
 .task {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: flex-start;
   border-radius: 10px;
   background-color: #ffffff;
-  filter: drop-shadow(0 2px 4px rgba(21, 27, 38, 0.2));
-  min-height: 86px;
+  box-shadow: 0 2px 4px rgba(21, 27, 38, 0.2);
+  margin: 0 15px;
   padding: 15px;
   box-sizing: border-box;
   cursor: pointer;
@@ -21,30 +21,34 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
 .task__name {
-  outline: none;
-  border: none;
-  background-color: transparent;
   padding: 0;
   margin: 0;
-  display: inline-block;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   width: 100%;
   font-weight: 400;
   color: #333333;
   font-size: 14px;
-  line-height: 22px;
+  line-height: 17px;
+  cursor: text;
+  outline: none;
+  border: none;
 }
 
-.task__name::placeholder {
+.task__name:empty:not(:focus)::before {
+  content: attr(data-placeholder);
+  display: block;
   color: #808080;
-  font-weight: 400;
+  pointer-events: none;
 }
 
 .task__user-ava {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px dashed #96999C;
   display: flex;

@@ -10,14 +10,7 @@
   background-color: #F2F5FA;
   min-width: 310px;
   max-width: 310px;
-  height: 100%;
-  overflow-y: scroll;
-  padding: 13px 15px;
-  box-sizing: border-box;
-}
-
-.column::-webkit-scrollbar {
-  display: none;
+  height: calc(100vh - 109px);
 }
 
 .column__info {
@@ -25,6 +18,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 13px 15px 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .column__name {
@@ -99,4 +95,12 @@
   flex-direction: column;
   gap: 15px;
   width: 100%;
+  flex-grow: 1;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding-bottom: 30px;
+}
+
+.column__tasks::-webkit-scrollbar {
+  display: none;
 }
