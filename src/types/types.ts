@@ -10,6 +10,7 @@ export type Board = {
 export type Task = {
   id: number;
   title: string;
+  completed: boolean;
 };
 
 // Колонки в канбан

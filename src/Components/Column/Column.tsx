@@ -9,9 +9,10 @@ type ColumnProps = {
   deleteColumn: (id: number) => void;
   addTask: (id: number) => void;
   onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
+  toggleTaskCompletion: (columnId: number, taskId: number) => void;
 };
 
-const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTaskTitle} : ColumnProps) => {
+const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTaskTitle, toggleTaskCompletion} : ColumnProps) => {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -29,9 +30,7 @@ const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTas
 
   const handleAddTask = () => {
     addTask(column.id)
-  }
-
-  
+  }  
   
   return (
     <div className='column'>
@@ -76,8 +75,10 @@ const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTas
             key={task.id}
             taskId={task.id}
             taskTitle={task.title}
+            taskCompleted={task.completed}
             columnId={column.id}
             onChangeTaskTitle={onChangeTaskTitle}
+            toggleTaskCompletion={toggleTaskCompletion}
           />
         ))}
       </div>      

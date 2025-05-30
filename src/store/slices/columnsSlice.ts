@@ -43,6 +43,7 @@ const columnsSlice = createSlice({
         column.tasks.push({
           id: Date.now(),
           title: '',
+          completed: false,
         });
       }
     },
@@ -56,9 +57,27 @@ const columnsSlice = createSlice({
         }
       }
     },
+    // завершить/возобновить задачу
+    toggleTaskCompletion: (state,action: PayloadAction<{ columnId: number; taskId: number}>) => {
+      const column = state.columns.find(col => col.id === action.payload.columnId);
+      if (column) {
+        const task = column.tasks.find(task => task.id === action.payload.taskId);
+        if (task) {
+          task.completed = !task.completed;
+        }
+      }
+    },
   }
 })
 
-export const { addColumn, updateColumnTitle, removeColumn, reloadColumns, addTask, updateNewTaskTitle } = columnsSlice.actions;
+export const { 
+  addColumn,
+  updateColumnTitle,
+  removeColumn,
+  reloadColumns,
+  addTask,
+  updateNewTaskTitle,
+  toggleTaskCompletion  
+} = columnsSlice.actions;
 
 export default columnsSlice.reducer;

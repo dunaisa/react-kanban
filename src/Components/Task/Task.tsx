@@ -5,10 +5,12 @@ type TaskProps = {
   taskId: number;
   columnId: number;
   taskTitle: string;
+  taskCompleted: boolean;
   onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
+  toggleTaskCompletion: (columnId: number, taskId: number) => void;
 };
 
-const Task = ({columnId, taskId, taskTitle, onChangeTaskTitle} : TaskProps) => {
+const Task = ({columnId, taskId, taskTitle, onChangeTaskTitle, toggleTaskCompletion, taskCompleted} : TaskProps) => {
 
   const spanRef = useRef<HTMLSpanElement>(null);
 
@@ -17,9 +19,28 @@ const Task = ({columnId, taskId, taskTitle, onChangeTaskTitle} : TaskProps) => {
     onChangeTaskTitle(columnId, taskId, newTitle);
   }
 
+  const handleToggleCompletion = () => {
+    toggleTaskCompletion(columnId, taskId)
+  }
+
   return (
       <div className='task'>
-        <div className='task__heading'>
+
+        <div className={!taskCompleted ? 'task__heading' : 'task__heading task__heading--completed'}>
+          {taskTitle && 
+            <button className='task__status' type="button" onClick={handleToggleCompletion}>
+
+              {
+                !taskCompleted ? <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.33333 7.5L6.77778 8.94444L9.66667 6.05555M14 7.5C14 8.35359 13.8319 9.19883 13.5052 9.98744C13.1786 10.7761 12.6998 11.4926 12.0962 12.0962C11.4926 12.6998 10.7761 13.1786 9.98744 13.5052C9.19883 13.8319 8.35359 14 7.5 14C6.64641 14 5.80117 13.8319 5.01256 13.5052C4.22394 13.1786 3.50739 12.6998 2.90381 12.0962C2.30022 11.4926 1.82144 10.7761 1.49478 9.98744C1.16813 9.19883 1 8.35359 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C9.22391 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#808080" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg> :  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="15" height="15" rx="7.5" fill="#8BC34A"/>
+                <path d="M5.33331 7.5L6.77776 8.94445L9.66665 6.05556" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              }
+              
+            </button>
+          }
 
           <span
             ref={spanRef}
@@ -30,6 +51,7 @@ const Task = ({columnId, taskId, taskTitle, onChangeTaskTitle} : TaskProps) => {
               {taskTitle.trim() === '' ? null : taskTitle}
           </span>
         </div>
+
         <div className='task__info'>
 
           <div className='task__user-ava'>
