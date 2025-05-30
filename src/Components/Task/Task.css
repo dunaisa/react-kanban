@@ -73,3 +73,41 @@
   margin: 5px 0 0;
   cursor: pointer;
 }
+
+.task__info {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task__timer-btn {
+  outline: none;
+  border: 1px solid #4F6EA3;
+  border-radius: 50%;
+  background-color: transparent;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  transition: 0.3s;
+  cursor: pointer;  
+}
+
+.task:hover .task__timer-btn {
+  opacity: 1;
+}
+
+.task__timer-btn:hover {
+  background-color: #4F6EA3;
+}
+
+.task__timer-btn:hover svg path {
+  stroke: #ffffff;
+  fill: #ffffff;
+}
+
