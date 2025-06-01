@@ -1,6 +1,6 @@
 import './Column.css'
 import { Column as ColumnType } from '../../types/types';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Task from '../Task/Task';
 
 type ColumnProps = {
@@ -10,9 +10,23 @@ type ColumnProps = {
   addTask: (id: number) => void;
   onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
   toggleTaskCompletion: (columnId: number, taskId: number) => void;
+  onDragStart: (taskId: number, sourceColumnId: number, sourceTaskIndex: number) => void;
+  onDragEnd: () => void;
+  onDrop: (destinationColumnId: number, destinationIndex: number) => void;
+  isDragging: boolean;
 };
 
-const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTaskTitle, toggleTaskCompletion} : ColumnProps) => {
+const Column = ({column,
+  onChangeColumnTitle,
+  deleteColumn,
+  addTask,
+  onChangeTaskTitle,
+  toggleTaskCompletion,
+  onDragStart,
+  onDragEnd,
+  onDrop,
+  isDragging
+} : ColumnProps) => {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -30,10 +44,32 @@ const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTas
 
   const handleAddTask = () => {
     addTask(column.id)
-  }  
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+
+    const mouseY = e.clientY;
+
+    const taskElements = Array.from(e.currentTarget.querySelectorAll('.task'));
+
+    const overIndex = taskElements.findIndex((el) => {
+      const rect = el.getBoundingClientRect();
+      const offset = mouseY - rect.top;
+      return offset < rect.height / 2;
+    });
+
+    const destinationIndex = overIndex === -1 ? column.tasks.length : overIndex;
+
+    onDrop(column.id,  destinationIndex);
+  }
   
   return (
-    <div className='column'>
+    <div className='column' onDragOver={handleDragOver} onDrop={handleDrop}>
       <div className='column__info'>
 
         <input 
@@ -70,15 +106,18 @@ const Column = ({column, onChangeColumnTitle, deleteColumn, addTask, onChangeTas
 
       <div className='column__tasks'>
 
-        {column.tasks.map(task => (
+        {column.tasks.map((task, index) => (
           <Task
             key={task.id}
             taskId={task.id}
+            taskIndex={index}
             taskTitle={task.title}
             taskCompleted={task.completed}
             columnId={column.id}
             onChangeTaskTitle={onChangeTaskTitle}
             toggleTaskCompletion={toggleTaskCompletion}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
           />
         ))}
       </div>      

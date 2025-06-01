@@ -4,6 +4,11 @@ import { Column, ColumnsState } from '../../types/types';
 const initialState: ColumnsState = {
   columns: [],
   newTasks: {},
+  drag: {
+    taskId: null,
+    sourceColumnId: null,
+    sourceTaskIndex: null,
+  },
 }
 
 const columnsSlice = createSlice({
@@ -11,7 +16,7 @@ const columnsSlice = createSlice({
   initialState,
   reducers: {
     // добавить колонку
-    addColumn: (state, action: PayloadAction<{title: string}>) => {
+    addColumn: (state) => {
       const newColumn: Column ={
         id: Date.now(),
         title: '',
@@ -48,7 +53,7 @@ const columnsSlice = createSlice({
       }
     },
     // обновить название задачи
-    updateNewTaskTitle: (state,action: PayloadAction<{ columnId: number; taskId: number; taskTitle: string }>) => {
+    updateNewTaskTitle: (state, action: PayloadAction<{ columnId: number; taskId: number; taskTitle: string }>) => {
       const column = state.columns.find(col => col.id === action.payload.columnId);
       if (column) {
         const task = column.tasks.find(task => task.id === action.payload.taskId);
@@ -58,7 +63,7 @@ const columnsSlice = createSlice({
       }
     },
     // завершить/возобновить задачу
-    toggleTaskCompletion: (state,action: PayloadAction<{ columnId: number; taskId: number}>) => {
+    toggleTaskCompletion: (state, action: PayloadAction<{ columnId: number; taskId: number}>) => {
       const column = state.columns.find(col => col.id === action.payload.columnId);
       if (column) {
         const task = column.tasks.find(task => task.id === action.payload.taskId);
@@ -67,6 +72,34 @@ const columnsSlice = createSlice({
         }
       }
     },
+    // "взять" задачу для перетаскивания
+    startTaskDrag: (state, action: PayloadAction<{ taskId: number; sourceColumnId: number; sourceTaskIndex: number}>) => {
+      state.drag.taskId = action.payload.taskId;
+      state.drag.sourceColumnId = action.payload.sourceColumnId;
+      state.drag.sourceTaskIndex = action.payload.sourceTaskIndex;
+    },
+    // "бросить" задачу при перетаскивании
+    stopTaskDrag: (state) => {
+      state.drag.taskId = null;
+      state.drag.sourceColumnId = null;
+      state.drag.sourceTaskIndex = null;
+    },
+    // перемещение задачи в целевую колонку
+    moveTaskBetweenColumns: (state, action: PayloadAction<{sourceColumnId: number; taskId: number; destinationColumnId: number; destinationIndex: number}>) => {
+
+      const { sourceColumnId, taskId, destinationColumnId, destinationIndex} = action.payload;
+
+      const sourceColumn = state.columns.find((col) => col.id === sourceColumnId);
+      const destColumn = state.columns.find((col) => col.id === destinationColumnId);
+
+      if (!sourceColumn || !destColumn) return;
+
+      const sourceIndex = sourceColumn.tasks.findIndex(t => t.id === taskId);
+      if (sourceIndex === -1) return;
+
+      const [movedTask] = sourceColumn.tasks.splice(sourceIndex, 1);
+      destColumn.tasks.splice(destinationIndex, 0, movedTask);
+    }
   }
 })
 
@@ -77,7 +110,11 @@ export const {
   reloadColumns,
   addTask,
   updateNewTaskTitle,
-  toggleTaskCompletion  
+  toggleTaskCompletion,
+  startTaskDrag,
+  stopTaskDrag,
+  moveTaskBetweenColumns
+
 } = columnsSlice.actions;
 
 export default columnsSlice.reducer;

@@ -13,6 +13,16 @@ export type Task = {
   completed: boolean;
 };
 
+// DnD задач
+
+export type TaskDragState = {
+  taskId: number | null;
+  // из какой колонки
+  sourceColumnId: number | null;
+  // индекс задачи в колонке
+  sourceTaskIndex: number | null;
+}
+
 // Колонки в канбан
 
 export type Column = {
@@ -24,4 +34,5 @@ export type Column = {
 export type ColumnsState = {
   columns: Column[];
   newTasks: Record<number, string>;
+  drag: TaskDragState;
 };

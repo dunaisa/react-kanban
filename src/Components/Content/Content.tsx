@@ -1,4 +1,3 @@
-// import { Column } from '../../types/types';
 import './Content.css'
 import Column from '../Column/Column';
 import { Column as ColumnType } from '@/types/types';
@@ -11,9 +10,25 @@ type contentProps = {
   addTask: (columnId: number) => void;
   onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
   toggleTaskCompletion: (columnId: number, taskId: number) => void;
+  onDragStart: (taskId: number, sourceColumnId: number, sourceTaskIndex: number) => void;
+  onDragEnd: () => void;
+  onDrop: (destinationColumnId: number, destinationIndex: number) => void;
+  isDragging: boolean;
 }
 
-const Content = ({handleAddColumn, columns, onChangeColumnTitle, deleteColumn, addTask, onChangeTaskTitle, toggleTaskCompletion}: contentProps) => {
+const Content = ({
+  handleAddColumn,
+  columns,
+  onChangeColumnTitle,
+  deleteColumn,
+  addTask,
+  onChangeTaskTitle,
+  toggleTaskCompletion,
+  onDragStart,
+  onDragEnd,
+  onDrop,
+  isDragging
+}: contentProps) => {
 
   return (
     <div className="content">
@@ -53,10 +68,13 @@ const Content = ({handleAddColumn, columns, onChangeColumnTitle, deleteColumn, a
                   addTask={addTask}
                   onChangeTaskTitle={onChangeTaskTitle}
                   toggleTaskCompletion={toggleTaskCompletion}
+                  onDragStart={onDragStart}
+                  onDragEnd={onDragEnd}
+                  onDrop={onDrop}
+                  isDragging={isDragging}
                   />
               ))
-            }
-            
+            }          
             
 
             <div className='content__columns-add'>

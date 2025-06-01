@@ -8,9 +8,22 @@ type TaskProps = {
   taskCompleted: boolean;
   onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
   toggleTaskCompletion: (columnId: number, taskId: number) => void;
+  taskIndex: number;
+  onDragStart: (taskId: number, sourceColumnId: number, sourceTaskIndex: number) => void;
+  onDragEnd: () => void;
 };
 
-const Task = ({columnId, taskId, taskTitle, onChangeTaskTitle, toggleTaskCompletion, taskCompleted} : TaskProps) => {
+const Task = ({
+  columnId,
+  taskId, 
+  taskTitle,
+  onChangeTaskTitle,
+  toggleTaskCompletion,
+  taskCompleted,
+  taskIndex,
+  onDragStart,
+  onDragEnd
+} : TaskProps) => {
 
   const spanRef = useRef<HTMLSpanElement>(null);
 
@@ -23,8 +36,16 @@ const Task = ({columnId, taskId, taskTitle, onChangeTaskTitle, toggleTaskComplet
     toggleTaskCompletion(columnId, taskId)
   }
 
+  const handleMouseDown = () => {
+    onDragStart(taskId, columnId, taskIndex)
+  }
+
+  const handleMouseUp = () => {
+    onDragEnd()
+  }
+
   return (
-      <div className='task'>
+      <div className='task' draggable onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
 
         <div className={!taskCompleted ? 'task__heading' : 'task__heading task__heading--completed'}>
           {taskTitle && 
