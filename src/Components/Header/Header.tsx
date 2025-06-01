@@ -4,17 +4,17 @@ import UserImg from '../../assets/user-img.png'
 import { Board } from '../../types/types';
 
 type HeaderProps = {
-  board: Board | null;
+  activeTitleBoard: string | null;
 }
 
-const Header = ({ board }: HeaderProps) => {
+const Header = ({ activeTitleBoard }: HeaderProps) => {
 
   return (
     <div className='header'>
       <div className='header__nav'>
         <div className='header__nav-page'>
           <span className='header__page-name'>
-            {!board ? 'Электротовары' : board.category}
+            {activeTitleBoard}
           </span>
           <span className='header__page-status'>
             В работе

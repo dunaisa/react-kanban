@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom'
 // { activeBoardId }: SidebarProps
 
 type SidebarProps = {
-  boards: Board[];
-  onBoardSelect: (id: string) => void;
+  boardCategories: Board[];
+  onChooseCategory: (boardId: string) => void;
 };
 
-const Sidebar = ({ boards, onBoardSelect }: SidebarProps) => {
+const Sidebar = ({ boardCategories, onChooseCategory }: SidebarProps) => {
 
   return (
     <div className='side-bar'>
@@ -59,14 +59,23 @@ const Sidebar = ({ boards, onBoardSelect }: SidebarProps) => {
 
           <ul className='side-bar__list'>
 
-            {boards.map((board) => (
+            {boardCategories.map(category => (
+              <li className='side-bar__list-item' key={category.id} onClick={() => onChooseCategory(category.id)}>
+                <div className='side-bar__list-link' >
+                  <div className='side-bar__list-link-marker'></div>
+                  <span className='side-bar__list-link-text'>{category.title}</span>
+                </div>
+              </li>
+            ))}
+
+            {/* {boards.map((board) => (
               <li className='side-bar__list-item' key={board.id}>
-                <Link to={!board.category ? '/favorites/Электротовары/kanban' : `/favorites/${board.category}/kanban`} className='side-bar__list-link' onClick={() => onBoardSelect(board.id)}>
+                <div className='side-bar__list-link' onClick={() => onBoardSelect(board.id)}>
                   <div className='side-bar__list-link-marker'></div>
                   <span className='side-bar__list-link-text'>{board.category}</span>
-                </Link>
+                </div>
             </li>
-            ))}
+            ))} */}
 
             {/* <li className='side-bar__list-item'>
               <Link href="" className='side-bar__list-link'>

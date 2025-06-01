@@ -1,10 +1,10 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import './App.css'
 import Header from '../Header/Header'
 import Sidebar from '../Sidebar/Sidebar'
 import Content from '../Content/Content'
 import MainLayout from '../MainLayout/MainLayout'
-import { boardsData } from '../../data/boardsData';
+import { BOARD_CATEGORIES } from '../../data/boardsData';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { store, useAppDispatch, RootState } from '../../store/store';
 import { 
@@ -16,21 +16,33 @@ import {
   toggleTaskCompletion,
   startTaskDrag,
   stopTaskDrag,
-  moveTaskBetweenColumns
+  moveTaskBetweenColumns,
+  setActiveBoard,
+  initializeDefaultBoard,
+  checkAndCreateBoardIfNotExists
 
  } from '../../store/slices/columnsSlice';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import { useCurrentBoardData } from '@/hooks/useCurrentBoardData';
+import { useEffect } from 'react'
 
 function App() {
 
-  const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
-  const selectedBoard = boardsData.find(board => board.id === selectedBoardId) || null;
+  // const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
+  // const selectedBoard = boardsData.find(board => board.id === selectedBoardId) || null;
 
   useLocalStorage();
 
   const dispatch = useAppDispatch();
-  const columns = useSelector((state: RootState) => state.columns.columns);
-  const drag = useSelector((state: RootState) => state.columns.drag);
+  // const columns = useSelector((state: RootState) => state.columns.columns);
+  // const drag = useSelector((state: RootState) => state.columns.drag);
+  // const activeBoardId = useSelector((state: any) => state.columns.activeBoardId);
+
+  useEffect(() => {
+    dispatch(initializeDefaultBoard());
+  }, [dispatch]);
+
+  const { columns, drag, activeBoardId } = useCurrentBoardData();
 
   const handleAddColumn = () => {
     dispatch(addColumn());
@@ -71,13 +83,21 @@ function App() {
     handleDragEnd()
   };
 
+  const currentCategory = BOARD_CATEGORIES.find(cat => cat.id === activeBoardId);
+  const activeTitleBoard = currentCategory ? currentCategory.title : 'Выберите категорию';
+
+  const handleChooseCategory = (boardId: string) => {
+    dispatch(setActiveBoard({ boardId }));
+    dispatch(checkAndCreateBoardIfNotExists(boardId));
+  };
+
   return (
     <div className='page'>
-      <Sidebar boards={boardsData} onBoardSelect={setSelectedBoardId}/>
+      <Sidebar boardCategories={BOARD_CATEGORIES} onChooseCategory={handleChooseCategory}/>
       
       <MainLayout>
 
-        <Header board={selectedBoard} />
+        <Header activeTitleBoard={activeTitleBoard} />
         <Content 
           handleAddColumn={handleAddColumn}
           columns={columns}

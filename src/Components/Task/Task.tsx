@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './Task.css'
 
 type TaskProps = {
@@ -44,6 +44,12 @@ const Task = ({
     onDragEnd()
   }
 
+  useEffect(() => {
+    if (spanRef.current) {
+      spanRef.current.innerText = taskTitle;
+    }
+  }, [taskTitle]);
+
   return (
       <div className='task' draggable onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
 
@@ -69,7 +75,7 @@ const Task = ({
             contentEditable="true"
             data-placeholder="Напишите название задачи..."
             onBlur={handleBlur}>
-              {taskTitle.trim() === '' ? null : taskTitle}
+              
           </span>
         </div>
 

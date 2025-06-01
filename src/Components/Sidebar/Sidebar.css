@@ -95,6 +95,8 @@
   display: flex;
   align-items: center;
   transition: 0.3s;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 .side-bar__list-link:hover {
@@ -104,6 +106,7 @@
 .side-bar__list-link-text {
   padding: 0;
   margin: 0 0 0 10px;
+  box-sizing: border-box;
 }
 
 .side-bar__category-heading {

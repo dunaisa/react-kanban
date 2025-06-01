@@ -1,8 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Column, ColumnsState } from '../../types/types';
+import { BoardsState, Column, ColumnsState } from '../../types/types';
 
-const initialState: ColumnsState = {
-  columns: [],
+// const initialState: ColumnsState = {
+//   columns: [],
+//   newTasks: {},
+//   drag: {
+//     taskId: null,
+//     sourceColumnId: null,
+//     sourceTaskIndex: null,
+//   },
+// }
+
+const initialState: BoardsState = {
+  boards: {},
+  activeBoardId: null,
   newTasks: {},
   drag: {
     taskId: null,
@@ -15,34 +26,96 @@ const columnsSlice = createSlice({
   name: 'columns',
   initialState,
   reducers: {
+    // установить дефолтно при открытии
+    initializeDefaultBoard: (state) => {
+      const defaultBoardId = 'electrotovary';
+  
+      // Если доска не существует — создаём её
+      if (!state.boards[defaultBoardId]) {
+        state.boards[defaultBoardId] = {
+          columns: [],
+        };
+      }  
+      // Делаем её активной
+      state.activeBoardId = defaultBoardId;
+      // if (!state.activeBoardId) {
+      //   state.activeBoardId = defaultBoardId;
+      // }
+    },
+    // выбрать категорию
+    setActiveBoard: (state, action: PayloadAction<{ boardId: string }>) => {
+      state.activeBoardId = action.payload.boardId;
+    },
+    // проверка на существование доски в сторе
+    checkAndCreateBoardIfNotExists: (state, action: PayloadAction<string>) => {
+      const boardId = action.payload;
+      if (!state.boards[boardId]) {
+        state.boards[boardId] = {
+          columns: [],
+        };
+      }
+    },
     // добавить колонку
     addColumn: (state) => {
+      const activeBoardId = state.activeBoardId;
+      console.log(activeBoardId)
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+
+      console.log(board)
+      if (!board) return;
+
       const newColumn: Column ={
         id: Date.now(),
         title: '',
         tasks: [],
       };
-      state.columns.push(newColumn)
+
+      board.columns.push(newColumn);
     },
      // обновить название колонки
     updateColumnTitle: (state, action: PayloadAction<{ id: number; title: string }>) => {
-        const column = state.columns.find(col => col.id === action.payload.id);
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+      
+        const column = board?.columns.find(col => col.id === action.payload.id);
         if (column) {
           column.title = action.payload.title;
         }
       },
     // удалить колонку
     removeColumn: (state, action: PayloadAction<{id : number}>) => {
-      state.columns = state.columns.filter(col => col.id !== action.payload.id)
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+      
+      board.columns= board.columns.filter(col => col.id !== action.payload.id)
     },
     // сохранение колонок через localStorage
     reloadColumns: (state, action: PayloadAction<{columns: Column[]}>) => {
-      state.columns = action.payload.columns;
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+      board.columns = action.payload.columns;
     },
     
     // добавить задачу
     addTask: (state, action: PayloadAction<{columnId: number}>) => {
-      const column = state.columns.find(col => col.id === action.payload.columnId);
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+
+      const column = board.columns.find(col => col.id === action.payload.columnId);
 
       if (column) {
         column.tasks.push({
@@ -54,7 +127,13 @@ const columnsSlice = createSlice({
     },
     // обновить название задачи
     updateNewTaskTitle: (state, action: PayloadAction<{ columnId: number; taskId: number; taskTitle: string }>) => {
-      const column = state.columns.find(col => col.id === action.payload.columnId);
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+
+      const column = board.columns.find(col => col.id === action.payload.columnId);
       if (column) {
         const task = column.tasks.find(task => task.id === action.payload.taskId);
         if (task) {
@@ -64,7 +143,13 @@ const columnsSlice = createSlice({
     },
     // завершить/возобновить задачу
     toggleTaskCompletion: (state, action: PayloadAction<{ columnId: number; taskId: number}>) => {
-      const column = state.columns.find(col => col.id === action.payload.columnId);
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+
+      const column = board.columns.find(col => col.id === action.payload.columnId);
       if (column) {
         const task = column.tasks.find(task => task.id === action.payload.taskId);
         if (task) {
@@ -86,11 +171,16 @@ const columnsSlice = createSlice({
     },
     // перемещение задачи в целевую колонку
     moveTaskBetweenColumns: (state, action: PayloadAction<{sourceColumnId: number; taskId: number; destinationColumnId: number; destinationIndex: number}>) => {
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
 
       const { sourceColumnId, taskId, destinationColumnId, destinationIndex} = action.payload;
 
-      const sourceColumn = state.columns.find((col) => col.id === sourceColumnId);
-      const destColumn = state.columns.find((col) => col.id === destinationColumnId);
+      const sourceColumn = board.columns.find((col) => col.id === sourceColumnId);
+      const destColumn = board.columns.find((col) => col.id === destinationColumnId);
 
       if (!sourceColumn || !destColumn) return;
 
@@ -113,7 +203,10 @@ export const {
   toggleTaskCompletion,
   startTaskDrag,
   stopTaskDrag,
-  moveTaskBetweenColumns
+  moveTaskBetweenColumns,
+  setActiveBoard,
+  initializeDefaultBoard,
+  checkAndCreateBoardIfNotExists
 
 } = columnsSlice.actions;
 

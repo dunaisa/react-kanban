@@ -1,10 +1,3 @@
-// Сайдбар
-
-export type Board = {
-  id: string;
-  category: string;
-};
-
 // Задачи в канбан
 
 export type Task = {
@@ -19,7 +12,7 @@ export type TaskDragState = {
   taskId: number | null;
   // из какой колонки
   sourceColumnId: number | null;
-  // индекс задачи в колонке
+  // индекс задачи в текущей колонке
   sourceTaskIndex: number | null;
 }
 
@@ -35,4 +28,36 @@ export type ColumnsState = {
   columns: Column[];
   newTasks: Record<number, string>;
   drag: TaskDragState;
+};
+
+// Сайдбар
+
+// export type Board = {
+//   id: string;
+//   category: string;
+// };
+
+export type Board = {
+  id: string;
+  title: string;
+};
+
+export type KanbanBoard = {
+  columns: Column[];
+};
+
+export type BoardsState = {
+  [x: string]: any;
+  boards: Record<string, KanbanBoard>;
+  activeBoardId: string | null;
+  newTasks: Record<number, string>;
+  drag: TaskDragState;
+};
+
+export type RootKanbanState = {
+  columns: BoardsState;
+};
+
+export type BoardLocalStorageData = {
+  columns: Column[];
 };
