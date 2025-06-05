@@ -18,14 +18,7 @@ const OpenedTask = ({ closeTask, openedTaskId, task, columnId, onChangeTaskTitle
 
   if (!task) return null;
 
-  // const dispatch = useDispatch();
   const spanRef = useRef<HTMLSpanElement>(null);
-
-  // useEffect(() => {
-  //   if (spanRef.current) {
-  //     spanRef.current.innerText = taskTitle;
-  //   }
-  // }, [taskTitle]);
 
   useEffect(() => {
     if (task && spanRef.current) {
@@ -87,9 +80,175 @@ const OpenedTask = ({ closeTask, openedTaskId, task, columnId, onChangeTaskTitle
             className='opened-task__title'
             contentEditable="true"
             data-placeholder="Напишите название задачи..."
-            >
-              
+            >              
           </span>
+          <div className='opened-task__description'>
+            <div className='opened-task__description-row'>
+              <span className='opened-task__description-title'>
+                Исполнитель
+              </span>
+              <div className='opened-task__row-info'>
+                <div className='opened-task__executor-ava'>
+                  <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.6735 4.07143C10.6735 5.01863 10.2864 5.92704 9.59752 6.59681C8.90861 7.26658 7.97425 7.64286 6.99998 7.64286C6.02572 7.64286 5.09136 7.26658 4.40245 6.59681C3.71354 5.92704 3.32651 5.01863 3.32651 4.07143C3.32651 3.12423 3.71354 2.21582 4.40245 1.54605C5.09136 0.876274 6.02572 0.5 6.99998 0.5C7.97425 0.5 8.90861 0.876274 9.59752 1.54605C10.2864 2.21582 10.6735 3.12423 10.6735 4.07143V4.07143ZM6.99998 10.3214C5.29502 10.3214 3.65989 10.9799 2.4543 12.152C1.2487 13.3241 0.571411 14.9138 0.571411 16.5714H13.4286C13.4286 14.9138 12.7513 13.3241 11.5457 12.152C10.3401 10.9799 8.70494 10.3214 6.99998 10.3214V10.3214Z" stroke="#96999C" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+                <span className='opened-task__row-text'>Никита Хаецкий</span>
+              </div>
+            </div>
+            <div className='opened-task__description-row'>
+              <span className='opened-task__description-title'>
+                Даты
+              </span>
+              <div className='opened-task__row-info'>
+                <div className='opened-task__executor-ava'>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.33333 3.66667V1V3.66667ZM9.66667 3.66667V1V3.66667ZM3.66667 6.33333H10.3333H3.66667ZM2.33333 13H11.6667C12.0203 13 12.3594 12.8595 12.6095 12.6095C12.8595 12.3594 13 12.0203 13 11.6667V3.66667C13 3.31304 12.8595 2.97391 12.6095 2.72386C12.3594 2.47381 12.0203 2.33333 11.6667 2.33333H2.33333C1.97971 2.33333 1.64057 2.47381 1.39052 2.72386C1.14048 2.97391 1 3.31304 1 3.66667V11.6667C1 12.0203 1.14048 12.3594 1.39052 12.6095C1.64057 12.8595 1.97971 13 2.33333 13Z" stroke="#96999C" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span className='opened-task__row-text'>Нет даты</span>
+              </div>
+            </div>
+            <div className='opened-task__description-row'>
+              <span className='opened-task__description-title'>
+                Проект
+              </span>
+              <div className='opened-task__row-info'>
+                <span className='opened-task__row-text'>Добавить проект</span>
+              </div>
+            </div>
+            <div className='opened-task__description-row'>
+              <span className='opened-task__description-title'>
+                Описание
+              </span>
+              <div className='opened-task__row-info'>
+                <div className='opened-task__row-text opened-task__description-area' contentEditable data-placeholder='Добавьте описание к этой задаче...'>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div className='opened-task__subtask-wrapper'>
+            <span className='opened-task__subtask-title'>
+              Подзадачи
+            </span>
+            <ul className='opened-task__subtask-list'>
+              <li className='opened-task__subtask-item'>
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_2_802)">
+                <path d="M5.33333 7.5L6.77777 8.94444L9.66666 6.05555M14 7.5C14 8.35359 13.8319 9.19883 13.5052 9.98744C13.1786 10.7761 12.6998 11.4926 12.0962 12.0962C11.4926 12.6998 10.7761 13.1786 9.98743 13.5052C9.19882 13.8319 8.35358 14 7.49999 14C6.6464 14 5.80117 13.8319 5.01255 13.5052C4.22393 13.1786 3.50738 12.6998 2.9038 12.0962C2.30022 11.4926 1.82143 10.7761 1.49478 9.98744C1.16812 9.19883 0.999992 8.35359 0.999992 7.5C0.999992 5.77609 1.68481 4.12279 2.9038 2.90381C4.12278 1.68482 5.77609 1 7.49999 1C9.2239 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#808080" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_2_802">
+                <rect width="15" height="15" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+                <span className='opened-task__subtask-text'>
+                  Перенести пользователей в новую БД
+                </span>
+              </li>
+              <li className='opened-task__subtask-item'>
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_2_802)">
+                <path d="M5.33333 7.5L6.77777 8.94444L9.66666 6.05555M14 7.5C14 8.35359 13.8319 9.19883 13.5052 9.98744C13.1786 10.7761 12.6998 11.4926 12.0962 12.0962C11.4926 12.6998 10.7761 13.1786 9.98743 13.5052C9.19882 13.8319 8.35358 14 7.49999 14C6.6464 14 5.80117 13.8319 5.01255 13.5052C4.22393 13.1786 3.50738 12.6998 2.9038 12.0962C2.30022 11.4926 1.82143 10.7761 1.49478 9.98744C1.16812 9.19883 0.999992 8.35359 0.999992 7.5C0.999992 5.77609 1.68481 4.12279 2.9038 2.90381C4.12278 1.68482 5.77609 1 7.49999 1C9.2239 1 10.8772 1.68482 12.0962 2.90381C13.3152 4.12279 14 5.77609 14 7.5Z" stroke="#808080" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_2_802">
+                <rect width="15" height="15" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+                <span className='opened-task__subtask-text'>
+                  Сверстать новый интерфейс чекаута
+                </span>
+              </li>
+            </ul>
+            <button className='opened-task__subtask-btn'>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 9H4.5M9 4.5V9V4.5ZM9 9V13.5V9ZM9 9H13.5H9Z" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span className='opened-task__subtask-btn-text'>
+                Добавить подзадачу
+              </span>
+            </button>
+          </div>
+          <div className='opened-task__comments'>
+            <div className='opened-task__comments-wrapper'>
+              <div className='opened-task__comment'>
+                <div className='opened-task__executor-ava'>
+                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.6735 4.07143C10.6735 5.01863 10.2864 5.92704 9.59752 6.59681C8.90861 7.26658 7.97425 7.64286 6.99998 7.64286C6.02572 7.64286 5.09136 7.26658 4.40245 6.59681C3.71354 5.92704 3.32651 5.01863 3.32651 4.07143C3.32651 3.12423 3.71354 2.21582 4.40245 1.54605C5.09136 0.876274 6.02572 0.5 6.99998 0.5C7.97425 0.5 8.90861 0.876274 9.59752 1.54605C10.2864 2.21582 10.6735 3.12423 10.6735 4.07143V4.07143ZM6.99998 10.3214C5.29502 10.3214 3.65989 10.9799 2.4543 12.152C1.2487 13.3241 0.571411 14.9138 0.571411 16.5714H13.4286C13.4286 14.9138 12.7513 13.3241 11.5457 12.152C10.3401 10.9799 8.70494 10.3214 6.99998 10.3214V10.3214Z" stroke="#96999C" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                <div className='opened-task__comment-content'>
+                  <div className='opened-task__comment-content-top'>
+                    <span className='opened-task__comment-user-name'>
+                      Nick Khaetsky
+                    </span>
+                    <span className='opened-task__comment-time'>
+                      25 минут назад
+                    </span>
+                  </div>
+                  <div className='opened-task__comment-text'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet hendrerit ipsum vel gravida. Nullam auctor nisl leo, eu luctus ex eleifend nec. Praesent mauris odio, dapibus sit amet ipsum eget, venenatis tempus nisl.
+                  </div>
+                </div>
+
+              </div>
+              <div className='opened-task__comment'>
+                <div className='opened-task__executor-ava'>
+                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.6735 4.07143C10.6735 5.01863 10.2864 5.92704 9.59752 6.59681C8.90861 7.26658 7.97425 7.64286 6.99998 7.64286C6.02572 7.64286 5.09136 7.26658 4.40245 6.59681C3.71354 5.92704 3.32651 5.01863 3.32651 4.07143C3.32651 3.12423 3.71354 2.21582 4.40245 1.54605C5.09136 0.876274 6.02572 0.5 6.99998 0.5C7.97425 0.5 8.90861 0.876274 9.59752 1.54605C10.2864 2.21582 10.6735 3.12423 10.6735 4.07143V4.07143ZM6.99998 10.3214C5.29502 10.3214 3.65989 10.9799 2.4543 12.152C1.2487 13.3241 0.571411 14.9138 0.571411 16.5714H13.4286C13.4286 14.9138 12.7513 13.3241 11.5457 12.152C10.3401 10.9799 8.70494 10.3214 6.99998 10.3214V10.3214Z" stroke="#96999C" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                <div className='opened-task__comment-content'>
+                  <div className='opened-task__comment-content-top'>
+                    <span className='opened-task__comment-user-name'>
+                      Nick Khaetsky
+                    </span>
+                    <span className='opened-task__comment-time'>
+                      25 минут назад
+                    </span>
+                  </div>
+                  <div className='opened-task__comment-text'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet hendrerit ipsum vel gravida. Nullam auctor nisl leo, eu luctus ex eleifend nec. Praesent mauris odio, dapibus sit amet ipsum eget, venenatis tempus nisl.
+                  </div>
+                </div>
+
+              </div>
+              <div className='opened-task__comment'>
+                <div className='opened-task__executor-ava'>
+                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.6735 4.07143C10.6735 5.01863 10.2864 5.92704 9.59752 6.59681C8.90861 7.26658 7.97425 7.64286 6.99998 7.64286C6.02572 7.64286 5.09136 7.26658 4.40245 6.59681C3.71354 5.92704 3.32651 5.01863 3.32651 4.07143C3.32651 3.12423 3.71354 2.21582 4.40245 1.54605C5.09136 0.876274 6.02572 0.5 6.99998 0.5C7.97425 0.5 8.90861 0.876274 9.59752 1.54605C10.2864 2.21582 10.6735 3.12423 10.6735 4.07143V4.07143ZM6.99998 10.3214C5.29502 10.3214 3.65989 10.9799 2.4543 12.152C1.2487 13.3241 0.571411 14.9138 0.571411 16.5714H13.4286C13.4286 14.9138 12.7513 13.3241 11.5457 12.152C10.3401 10.9799 8.70494 10.3214 6.99998 10.3214V10.3214Z" stroke="#96999C" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                <div className='opened-task__comment-content'>
+                  <div className='opened-task__comment-content-top'>
+                    <span className='opened-task__comment-user-name'>
+                      Nick Khaetsky
+                    </span>
+                    <span className='opened-task__comment-time'>
+                      25 минут назад
+                    </span>
+                  </div>
+                  <div className='opened-task__comment-text'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet hendrerit ipsum vel gravida. Nullam auctor nisl leo, eu luctus ex eleifend nec. Praesent mauris odio, dapibus sit amet ipsum eget, venenatis tempus nisl.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div className='opened-task__comment-form comment-form'>
+            <div className='opened-task__executor-ava'>
+              <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.6735 4.07143C10.6735 5.01863 10.2864 5.92704 9.59752 6.59681C8.90861 7.26658 7.97425 7.64286 6.99998 7.64286C6.02572 7.64286 5.09136 7.26658 4.40245 6.59681C3.71354 5.92704 3.32651 5.01863 3.32651 4.07143C3.32651 3.12423 3.71354 2.21582 4.40245 1.54605C5.09136 0.876274 6.02572 0.5 6.99998 0.5C7.97425 0.5 8.90861 0.876274 9.59752 1.54605C10.2864 2.21582 10.6735 3.12423 10.6735 4.07143V4.07143ZM6.99998 10.3214C5.29502 10.3214 3.65989 10.9799 2.4543 12.152C1.2487 13.3241 0.571411 14.9138 0.571411 16.5714H13.4286C13.4286 14.9138 12.7513 13.3241 11.5457 12.152C10.3401 10.9799 8.70494 10.3214 6.99998 10.3214V10.3214Z" stroke="#96999C" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <div className='comment-form__area'>
+              <div className='comment-form__textarea' contentEditable data-placeholder='Задайте вопрос или напишите комментарий...'>
+
+              </div>
+              <button className='comment-form__btn'>
+                <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.95173 9.78319C2.98348 9.92607 2.98348 10.0742 2.95173 10.2171L1.4557 16.9492C1.27304 17.7712 2.12597 18.4371 2.8791 18.0605L17.2111 10.8945C17.9481 10.526 17.9481 9.47422 17.2111 9.10569L2.8791 1.9397C2.12597 1.56313 1.27304 2.22908 1.4557 3.05106L2.95173 9.78319Z" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+          </div>
         </div>
 
       </div>

@@ -30,15 +30,9 @@ import { useEffect } from 'react'
 
 function App() {
 
-  // const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
-  // const selectedBoard = boardsData.find(board => board.id === selectedBoardId) || null;
-
   useLocalStorage();
 
   const dispatch = useAppDispatch();
-  // const columns = useSelector((state: RootState) => state.columns.columns);
-  // const drag = useSelector((state: RootState) => state.columns.drag);
-  // const activeBoardId = useSelector((state: any) => state.columns.activeBoardId);
 
   useEffect(() => {
     dispatch(initializeDefaultBoard());

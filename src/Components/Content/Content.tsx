@@ -86,8 +86,7 @@ const Content = ({
                   openTask={openTask}
                   />
               ))
-            }          
-            
+            }            
 
             <div className='content__columns-add'>
               <button className='content__columns-btn' onClick={handleAddColumn}>
