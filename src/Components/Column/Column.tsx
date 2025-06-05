@@ -14,6 +14,7 @@ type ColumnProps = {
   onDragEnd: () => void;
   onDrop: (destinationColumnId: number, destinationIndex: number) => void;
   isDragging: boolean;
+  openTask: (taskId: number) => void;
 };
 
 const Column = ({column,
@@ -25,7 +26,8 @@ const Column = ({column,
   onDragStart,
   onDragEnd,
   onDrop,
-  isDragging
+  isDragging,
+  openTask
 } : ColumnProps) => {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -118,6 +120,7 @@ const Column = ({column,
             toggleTaskCompletion={toggleTaskCompletion}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
+            openTask={openTask}
           />
         ))}
       </div>      

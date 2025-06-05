@@ -1,0 +1,173 @@
+.opened-task {
+  position: absolute;
+  z-index: 3;
+  height: 100%;
+  width: 52%;
+  top: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  box-shadow: 0 5px 20px rgba(21, 27, 38, 0.2);
+  transition: 0.5s;
+}
+
+.opened-task--hide {
+  transform: translateX(100%);
+  opacity: 0.5;
+}
+
+.opened-task__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.opened-task__top {
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 1px solid #F2F5FA;
+}
+
+.opened-task__top-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 350px;
+  width: 100%;
+}
+
+.opened-task__top-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 50%;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.opened-task__btn {
+  padding: 0;
+  margin: 0;
+  background-color: #F2F5FA;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opened-task__btn-timer {
+  border-radius: 10px;
+  max-width: 222px;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.opened-task__btn-timer-text {
+  font-weight: 400;
+  color: #333333;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.opened-task__time {
+  display: flex;
+  align-items: center;
+}
+
+.opened-task__time-current,
+.opened-task__time-planned {
+  font-weight: 400;
+  color: #333333;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.opened-task__time-current::after {
+  content: ' /\00a0';
+  font-weight: 400;
+  color: #333333;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.opened-task__btn-copy,
+.opened-task__btn-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.opened-task__btn-finish {
+  background-color: #97C95D;
+  height: 30px;
+  max-width: 200px;
+  width: 100%;
+  gap: 10px;
+  border-radius: 10px;
+}
+
+.opened-task__btn-finish-text {
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.opened-task__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.opened-task__title {
+  padding: 20px;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  width: 100%;
+  font-weight: 600;
+  color: #333333;
+  font-size: 24px;
+  line-height: 26px;
+  cursor: text;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.opened-task__title:empty:not(:focus)::before {
+  content: attr(data-placeholder);
+  display: block;
+  color: #E5E5E5;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 1440px) {
+  .opened-task__btn-finish {
+    max-width: 180px;
+  }
+  .opened-task__btn-timer {
+    max-width: 200px;
+  }
+  .opened-task__top-right {
+    gap: 7px;
+  }
+  .opened-task__top {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .opened-task__title {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+

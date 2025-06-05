@@ -11,6 +11,7 @@ type TaskProps = {
   taskIndex: number;
   onDragStart: (taskId: number, sourceColumnId: number, sourceTaskIndex: number) => void;
   onDragEnd: () => void;
+  openTask: (taskId: number) => void;
 };
 
 const Task = ({
@@ -22,7 +23,8 @@ const Task = ({
   taskCompleted,
   taskIndex,
   onDragStart,
-  onDragEnd
+  onDragEnd,
+  openTask
 } : TaskProps) => {
 
   const spanRef = useRef<HTMLSpanElement>(null);
@@ -50,8 +52,12 @@ const Task = ({
     }
   }, [taskTitle]);
 
+  const handleOpenTask = () => {
+    openTask(taskId)
+  }
+
   return (
-      <div className='task' draggable onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+      <div className='task' draggable onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onDoubleClick={handleOpenTask} >
 
         <div className={!taskCompleted ? 'task__heading' : 'task__heading task__heading--completed'}>
           {taskTitle && 
@@ -71,7 +77,7 @@ const Task = ({
 
           <span
             ref={spanRef}
-            className='task__name'
+            className='task__title'
             contentEditable="true"
             data-placeholder="Напишите название задачи..."
             onBlur={handleBlur}>

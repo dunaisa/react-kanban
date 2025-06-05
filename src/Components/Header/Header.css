@@ -3,13 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 11px 15px 0 20px;
+  padding: 0 15px 0 20px;
 }
 
 .header__nav {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin-top: 11px;
 }
 
 .header__nav-page {

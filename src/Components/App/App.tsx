@@ -19,7 +19,9 @@ import {
   moveTaskBetweenColumns,
   setActiveBoard,
   initializeDefaultBoard,
-  checkAndCreateBoardIfNotExists
+  checkAndCreateBoardIfNotExists,
+  openTask,
+  closeTask
 
  } from '../../store/slices/columnsSlice';
 // import { useSelector } from 'react-redux';
@@ -42,7 +44,7 @@ function App() {
     dispatch(initializeDefaultBoard());
   }, [dispatch]);
 
-  const { columns, drag, activeBoardId } = useCurrentBoardData();
+  const { columns, drag, activeBoardId, openedTaskId, task, columnId } = useCurrentBoardData();
 
   const handleAddColumn = () => {
     dispatch(addColumn());
@@ -91,6 +93,14 @@ function App() {
     dispatch(checkAndCreateBoardIfNotExists(boardId));
   };
 
+  const handleOpenTask = (taskId: number) => {
+    dispatch(openTask(taskId));
+  }
+
+  const handleCloseTask = () => {
+    dispatch(closeTask());
+  }
+
   return (
     <div className='page'>
       <Sidebar boardCategories={BOARD_CATEGORIES} onChooseCategory={handleChooseCategory}/>
@@ -110,6 +120,11 @@ function App() {
           onDragEnd={handleDragEnd}
           onDrop={handleDrop}
           isDragging={!!drag.taskId}
+          openTask={handleOpenTask}
+          closeTask={handleCloseTask}
+          openedTaskId={openedTaskId}
+          task={task}
+          columnId={columnId}
           />
 
       </MainLayout>

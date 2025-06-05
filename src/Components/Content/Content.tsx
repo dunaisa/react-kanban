@@ -1,6 +1,7 @@
 import './Content.css'
 import Column from '../Column/Column';
-import { Column as ColumnType } from '@/types/types';
+import OpenedTask from '../OpenedTask/OpenedTask';
+import { Column as ColumnType, Task } from '@/types/types';
 
 type contentProps = {
   handleAddColumn: () => void;
@@ -14,6 +15,11 @@ type contentProps = {
   onDragEnd: () => void;
   onDrop: (destinationColumnId: number, destinationIndex: number) => void;
   isDragging: boolean;
+  openTask: (taskId: number) => void;
+  closeTask: () => void;
+  openedTaskId: number; 
+  task: Task;
+  columnId: number;
 }
 
 const Content = ({
@@ -27,7 +33,12 @@ const Content = ({
   onDragStart,
   onDragEnd,
   onDrop,
-  isDragging
+  isDragging,
+  openTask,
+  closeTask,
+  openedTaskId,
+  task,
+  columnId
 }: contentProps) => {
 
   return (
@@ -72,6 +83,7 @@ const Content = ({
                   onDragEnd={onDragEnd}
                   onDrop={onDrop}
                   isDragging={isDragging}
+                  openTask={openTask}
                   />
               ))
             }          
@@ -93,6 +105,8 @@ const Content = ({
 
         </div>
 
+        <OpenedTask closeTask={closeTask} openedTaskId={openedTaskId} task={task} columnId={columnId} onChangeTaskTitle={onChangeTaskTitle} />
+        
       </div>
       
     </div>

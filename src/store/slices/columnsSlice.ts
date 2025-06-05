@@ -20,6 +20,7 @@ const initialState: BoardsState = {
     sourceColumnId: null,
     sourceTaskIndex: null,
   },
+  openedTaskId: null,
 }
 
 const columnsSlice = createSlice({
@@ -189,6 +190,12 @@ const columnsSlice = createSlice({
 
       const [movedTask] = sourceColumn.tasks.splice(sourceIndex, 1);
       destColumn.tasks.splice(destinationIndex, 0, movedTask);
+    },
+    openTask: (state, action: PayloadAction<number>) => {
+      state.openedTaskId = action.payload;
+    },
+    closeTask: (state) => {
+      state.openedTaskId = null;
     }
   }
 })
@@ -206,7 +213,9 @@ export const {
   moveTaskBetweenColumns,
   setActiveBoard,
   initializeDefaultBoard,
-  checkAndCreateBoardIfNotExists
+  checkAndCreateBoardIfNotExists,
+  openTask,
+  closeTask
 
 } = columnsSlice.actions;
 

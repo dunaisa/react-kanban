@@ -32,11 +32,6 @@ export type ColumnsState = {
 
 // Сайдбар
 
-// export type Board = {
-//   id: string;
-//   category: string;
-// };
-
 export type Board = {
   id: string;
   title: string;
@@ -52,6 +47,7 @@ export type BoardsState = {
   activeBoardId: string | null;
   newTasks: Record<number, string>;
   drag: TaskDragState;
+  openedTaskId: number | null;
 };
 
 export type RootKanbanState = {
