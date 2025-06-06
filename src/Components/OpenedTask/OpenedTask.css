@@ -274,63 +274,6 @@
   padding: 0 20px;
 }
 
-.opened-task__subtask-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.opened-task__subtask-item {
-  padding: 0 20px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border-top: 1px solid #F2F5FA;
-}
-
-.opened-task__subtask-item:last-of-type {
-  border-bottom: 1px solid #F2F5FA;
-}
-
-.opened-task__subtask-text {
-  font-weight: 400;
-  color: #333333;
-  font-size: 14px;
-  line-height: 36px;
-}
-
-.opened-task__subtask-user-ava {
-  width: 28px;
-  height: 28px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed #96999C;
-  flex-shrink: 0;
-  margin-left: auto;
-}
-
-.opened-task__subtask-btn {
-  outline: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background-color: transparent;
-  padding: 10px 17px;
-  margin: 0;
-  cursor: pointer;
-}
-
-.opened-task__subtask-btn-text {
-  font-weight: 600;
-  color: #808080;
-  font-size: 14px;
-  line-height: 15px;
-}
-
 .opened-task__comments {
   margin-top: auto;
   height: 215px;
@@ -478,13 +421,6 @@
   .opened-task {
     overflow-y: auto;
   }
-  .opened-task__subtask-wrapper {
-    margin-bottom: 50px;
-  }
-
-  .opened-task__subtask-title {
-    padding: 0 15px;
-  }
 
   .comment-form__area  {
     padding: 8px 15px;
@@ -495,15 +431,6 @@
 
   .opened-task__comment {
     padding: 15px;
-  }
-
-  .opened-task__subtask-item {
-    padding: 0 15px;
-  }
-
-  .opened-task__subtask-btn {
-    padding-left: 15px;
-    padding-right: 15px;
   }
 
 }

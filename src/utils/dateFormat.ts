@@ -8,6 +8,6 @@ export const formatTimeAgo = (date: Date | string | number): string => {
 
   if (days > 0) return `${days} д. назад`;
   if (hours > 0) return `${hours} ч. назад`;
-  if (minutes > 0) return `${minutes} минут назад`;
+  if (minutes > 0) return `${minutes} мин. назад`;
   return 'Только что';
 };

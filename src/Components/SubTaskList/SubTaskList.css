@@ -1,0 +1,64 @@
+.subtask__list-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.subtask__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subtask__btn {
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: transparent;
+  margin: 0;
+  cursor: pointer;
+}
+
+.subtask__btn--details-task {
+  padding: 10px 17px;
+}
+
+.subtask__btn--small-task {
+  padding: 10px 0 0 0;
+}
+
+.subtask__btn-text {
+  font-size: 14px;
+  line-height: 15px;
+  color: #808080;
+}
+
+.subtask__btn-text--details-task {
+  font-weight: 600;
+
+}
+
+.subtask__btn-text--small-task {
+  font-weight: 400;  
+}
+
+@media screen and (max-width: 1440px) {
+
+  .subtask__wrapper {
+    margin-bottom: 50px;
+  }
+
+  .subtask__title {
+    padding: 0 15px;
+  }
+
+  .subtask__item {
+    padding: 0 15px;
+  }
+
+  .subtask__btn--details-task {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
