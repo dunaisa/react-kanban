@@ -8,6 +8,7 @@ type ColumnProps = {
   onChangeColumnTitle: (id: number, title: string) => void;
   deleteColumn: (id: number) => void;
   addTask: (id: number) => void;
+  removeTask: (columnId: number, taskId: number) => void;
   onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
   toggleTaskCompletion: (columnId: number, taskId: number) => void;
   onDragStart: (taskId: number, sourceColumnId: number, sourceTaskIndex: number) => void;
@@ -21,6 +22,7 @@ const Column = ({column,
   onChangeColumnTitle,
   deleteColumn,
   addTask,
+  removeTask,
   onChangeTaskTitle,
   toggleTaskCompletion,
   onDragStart,
@@ -94,10 +96,10 @@ const Column = ({column,
             </svg>
             {
               isPopupOpen && (
-                <div className='column__btn-popup' onClick={handleDeleteColumn}>
-                  <span className='column__btn-popup-text'>
+                <div className='column__menu column__menu-popup'>
+                  <button className='column__menu-btn' onClick={handleDeleteColumn}>
                     Удалить&nbsp;столбец
-                  </span>
+                  </button>
                 </div>
               )
             }
@@ -121,6 +123,7 @@ const Column = ({column,
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
             openTask={openTask}
+            removeTask={removeTask}
           />
         ))}
       </div>      

@@ -12,6 +12,7 @@ import {
   updateColumnTitle,
   removeColumn,
   addTask,
+  removeTask,
   updateNewTaskTitle,
   toggleTaskCompletion,
   startTaskDrag,
@@ -21,10 +22,10 @@ import {
   initializeDefaultBoard,
   checkAndCreateBoardIfNotExists,
   openTask,
-  closeTask
+  closeTask,
 
  } from '../../store/slices/columnsSlice';
-// import { useSelector } from 'react-redux';
+
 import { useCurrentBoardData } from '@/hooks/useCurrentBoardData';
 import { useEffect } from 'react'
 
@@ -54,6 +55,10 @@ function App() {
 
   const handleAddTask = (columnId: number) => {
     dispatch(addTask({ columnId }));
+  };
+
+  const handleRemoveTask = (columnId: number, taskId: number) => {
+    dispatch(removeTask({ columnId, taskId }));
   };
 
   const handleChangeTaskTitle = (columnId: number, taskId: number, taskTitle: string) => {
@@ -108,6 +113,7 @@ function App() {
           onChangeColumnTitle={handleChangeColumnTitle}
           deleteColumn={handleRemoveColumn}
           addTask={handleAddTask}
+          removeTask={handleRemoveTask}
           onChangeTaskTitle={handleChangeTaskTitle}
           toggleTaskCompletion={handleToggleTaskCompletion}
           onDragStart={handleDragStart}

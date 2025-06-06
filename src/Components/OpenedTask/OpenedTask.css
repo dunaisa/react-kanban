@@ -8,6 +8,7 @@
   background-color: #FFFFFF;
   box-shadow: 0 5px 20px rgba(21, 27, 38, 0.2);
   transition: 0.5s;
+  z-index: 10;
 }
 
 .opened-task--hide {
@@ -99,11 +100,21 @@
   line-height: 15px;
 }
 
-.opened-task__btn-copy,
-.opened-task__btn-close {
+.opened-task__btn-bg {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.opened-task__btn.opened-task__btn-bg {
+  transition: 0.3s;
+}
+
+.opened-task__btn.opened-task__btn-bg:hover {
+  border: 1px solid #4F6EA3;
+  background-color: transparent;
 }
 
 .opened-task__btn-finish {
@@ -113,6 +124,15 @@
   width: 100%;
   gap: 10px;
   border-radius: 10px;
+}
+
+.opened-task__btn-finish--restart {
+  background-color: #4F6EA3;
+  height: 30px;
+  max-width: 200px;
+  width: 100%;
+  gap: 10px;
+  border-radius: 10px;  
 }
 
 .opened-task__btn-finish-text {
@@ -280,6 +300,18 @@
   line-height: 36px;
 }
 
+.opened-task__subtask-user-ava {
+  width: 28px;
+  height: 28px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #96999C;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 .opened-task__subtask-btn {
   outline: none;
   border: none;
@@ -401,6 +433,9 @@
   margin: 0;
   height: auto;
   box-sizing: border-box;
+  max-height: 80px;
+  overflow-y: auto;
+  margin-right: 10px;
 }
 
 .comment-form__textarea:empty:not(:focus)::before {
@@ -416,7 +451,12 @@
 
 @media screen and (max-width: 1440px) {
   .opened-task__btn-finish {
-    max-width: 180px;
+    max-width: 160px;
+    gap: 2px;
+  }
+  .opened-task__btn-finish--restart {
+    max-width: 160px;
+    gap: 2px;
   }
   .opened-task__btn-timer {
     max-width: 200px;
@@ -430,8 +470,7 @@
   }
 
   .opened-task__title {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 15px;
   }
   .opened-task__description {
     padding: 0 15px;

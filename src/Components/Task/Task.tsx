@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Task.css'
 
 type TaskProps = {
@@ -12,6 +12,7 @@ type TaskProps = {
   onDragStart: (taskId: number, sourceColumnId: number, sourceTaskIndex: number) => void;
   onDragEnd: () => void;
   openTask: (taskId: number) => void;
+  removeTask: (columnId: number, taskId: number) => void;
 };
 
 const Task = ({
@@ -24,10 +25,13 @@ const Task = ({
   taskIndex,
   onDragStart,
   onDragEnd,
-  openTask
+  openTask,
+  removeTask
 } : TaskProps) => {
 
   const spanRef = useRef<HTMLSpanElement>(null);
+
+  const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
 
   const handleBlur = () => {
     const newTitle = spanRef.current.innerText.trim();
@@ -53,7 +57,17 @@ const Task = ({
   }, [taskTitle]);
 
   const handleOpenTask = () => {
-    openTask(taskId)
+    if (!isDeleteOverlayOpen) {
+      openTask(taskId)
+    }
+  }
+
+  const handleOpenOverlay = () => {
+    setIsDeleteOverlayOpen(!isDeleteOverlayOpen)
+  }
+
+  const handleRemoveTask = () => {
+    removeTask(columnId, taskId)
   }
 
   return (
@@ -102,6 +116,30 @@ const Task = ({
               </svg>
             </button>
           }
+
+        </div>
+
+        <button className='task__btn-more' onClick={handleOpenOverlay}>
+          <svg width="9" height="3" viewBox="0 0 9 3" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.29168 1.49999H1.29626H1.29168ZM4.50001 1.49999H4.50459H4.50001ZM7.70834 1.49999H7.71293H7.70834ZM1.75001 1.49999C1.75001 1.62155 1.70172 1.73813 1.61577 1.82408C1.52981 1.91003 1.41323 1.95832 1.29168 1.95832C1.17012 1.95832 1.05354 1.91003 0.967586 1.82408C0.881632 1.73813 0.833344 1.62155 0.833344 1.49999C0.833344 1.37843 0.881632 1.26185 0.967586 1.1759C1.05354 1.08995 1.17012 1.04166 1.29168 1.04166C1.41323 1.04166 1.52981 1.08995 1.61577 1.1759C1.70172 1.26185 1.75001 1.37843 1.75001 1.49999V1.49999ZM4.95834 1.49999C4.95834 1.62155 4.91005 1.73813 4.8241 1.82408C4.73815 1.91003 4.62157 1.95832 4.50001 1.95832C4.37845 1.95832 4.26187 1.91003 4.17592 1.82408C4.08997 1.73813 4.04168 1.62155 4.04168 1.49999C4.04168 1.37843 4.08997 1.26185 4.17592 1.1759C4.26187 1.08995 4.37845 1.04166 4.50001 1.04166C4.62157 1.04166 4.73815 1.08995 4.8241 1.1759C4.91005 1.26185 4.95834 1.37843 4.95834 1.49999V1.49999ZM8.16668 1.49999C8.16668 1.62155 8.11839 1.73813 8.03243 1.82408C7.94648 1.91003 7.8299 1.95832 7.70834 1.95832C7.58679 1.95832 7.47021 1.91003 7.38425 1.82408C7.2983 1.73813 7.25001 1.62155 7.25001 1.49999C7.25001 1.37843 7.2983 1.26185 7.38425 1.1759C7.47021 1.08995 7.58679 1.04166 7.70834 1.04166C7.8299 1.04166 7.94648 1.08995 8.03243 1.1759C8.11839 1.26185 8.16668 1.37843 8.16668 1.49999V1.49999Z" stroke="#333333" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+
+        <div className={isDeleteOverlayOpen ? 'task__btn-overlay' : 'task__btn-overlay hidden'}>
+          <div className='task__btn-container'>
+          <button className='task__btn-delete' onClick={handleRemoveTask}>
+            <svg width="34" height="38" viewBox="0 0 34 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_3427_9)">
+            <path d="M13.6666 9.1536e-07C13.4459 -0.0029954 13.2267 0.0379004 13.0219 0.120314C12.817 0.202727 12.6306 0.325015 12.4734 0.480077C12.3162 0.635138 12.1914 0.819882 12.1062 1.02358C12.0211 1.22728 11.9772 1.44587 11.9772 1.66667H1.99997C1.77912 1.66354 1.55985 1.70435 1.3549 1.7867C1.14996 1.86906 0.963421 1.99133 0.806138 2.1464C0.648855 2.30147 0.523961 2.48626 0.438715 2.69002C0.353469 2.89379 0.30957 3.11246 0.30957 3.33333C0.30957 3.55421 0.353469 3.77288 0.438715 3.97664C0.523961 4.18041 0.648855 4.36519 0.806138 4.52027C0.963421 4.67534 1.14996 4.79761 1.3549 4.87997C1.55985 4.96232 1.77912 5.00312 1.99997 5H32C32.2208 5.00312 32.4401 4.96232 32.645 4.87997C32.85 4.79761 33.0365 4.67534 33.1938 4.52027C33.3511 4.36519 33.476 4.18041 33.5612 3.97664C33.6465 3.77288 33.6904 3.55421 33.6904 3.33333C33.6904 3.11246 33.6465 2.89379 33.5612 2.69002C33.476 2.48626 33.3511 2.30147 33.1938 2.1464C33.0365 1.99133 32.85 1.86906 32.645 1.7867C32.4401 1.70435 32.2208 1.66354 32 1.66667H22.0228C22.0228 1.44587 21.9789 1.22728 21.8937 1.02358C21.8085 0.819882 21.6837 0.635138 21.5265 0.480077C21.3693 0.325015 21.1829 0.202727 20.9781 0.120314C20.7732 0.0379004 20.5541 -0.0029954 20.3333 9.1536e-07H13.6666ZM1.99997 8.33333V35C1.99997 36.8417 3.49164 38.3333 5.33331 38.3333H28.6666C30.5083 38.3333 32 36.8417 32 35V8.33333H1.99997Z"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_3427_9">
+            <rect width="34" height="38" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+
+          </button>
+            
+          </div>
 
         </div>
 

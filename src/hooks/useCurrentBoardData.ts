@@ -12,6 +12,7 @@ export const useCurrentBoardData = () => {
 
   let task = null;
   let columnId = null;
+  let comments = [];
 
   if (board && openedTaskId) {
     for (const column of board.columns) {
@@ -19,6 +20,7 @@ export const useCurrentBoardData = () => {
       if (foundTask) {
         task = foundTask;
         columnId = column.id;
+        comments = foundTask.comments || [];
         break;
       }
     }
@@ -30,6 +32,7 @@ export const useCurrentBoardData = () => {
     activeBoardId,
     openedTaskId,
     task,
-    columnId
+    columnId,
+    comments
   };
 };

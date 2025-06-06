@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BoardsState, Column, ColumnsState } from '../../types/types';
+import { BoardsState, Column, ColumnsState, TaskComment } from '../../types/types';
 
 // const initialState: ColumnsState = {
 //   columns: [],
@@ -39,9 +39,6 @@ const columnsSlice = createSlice({
       }  
       // Делаем её активной
       state.activeBoardId = defaultBoardId;
-      // if (!state.activeBoardId) {
-      //   state.activeBoardId = defaultBoardId;
-      // }
     },
     // выбрать категорию
     setActiveBoard: (state, action: PayloadAction<{ boardId: string }>) => {
@@ -123,7 +120,23 @@ const columnsSlice = createSlice({
           id: Date.now(),
           title: '',
           completed: false,
+          subTasks: [],
+          comments: [],
         });
+      }
+    },
+     // удалить задачу
+     removeTask: (state, action: PayloadAction<{columnId: number; taskId: number}>) => {
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+
+      const column = board.columns.find(col => col.id === action.payload.columnId);
+
+      if (column) {
+        column.tasks = column.tasks.filter(task => task.id !== action.payload.taskId);
       }
     },
     // обновить название задачи
@@ -196,6 +209,29 @@ const columnsSlice = createSlice({
     },
     closeTask: (state) => {
       state.openedTaskId = null;
+    },
+    addComment: (state, action: PayloadAction<{columnId: number; taskId: number; comment: Omit<TaskComment, 'id'>}>) => {
+      const activeBoardId = state.activeBoardId;
+      if (!activeBoardId) return;
+
+      const board = state.boards[activeBoardId];
+      if (!board) return;
+
+      const column = board.columns.find(col => col.id === action.payload.columnId);
+      if (!column) return;
+
+      const task = column.tasks.find(task => task.id === action.payload.taskId);
+      if (!task) return;
+
+      const newComment: TaskComment = {
+        ...action.payload.comment,
+        id: Date.now(),
+      }
+      if (!task.comments) {
+        task.comments = [];
+      }
+      
+      task.comments.push(newComment)
     }
   }
 })
@@ -206,6 +242,7 @@ export const {
   removeColumn,
   reloadColumns,
   addTask,
+  removeTask,
   updateNewTaskTitle,
   toggleTaskCompletion,
   startTaskDrag,
@@ -215,7 +252,8 @@ export const {
   initializeDefaultBoard,
   checkAndCreateBoardIfNotExists,
   openTask,
-  closeTask
+  closeTask,
+  addComment
 
 } = columnsSlice.actions;
 

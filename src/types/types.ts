@@ -1,9 +1,24 @@
 // Задачи в канбан
 
+export type SubTask = {
+  id: number;
+  title: string;
+  completed: boolean;
+};
+
+export type TaskComment = {
+  id: number;
+  userName: string;
+  text: string;
+  createdAt: string;
+};
+
 export type Task = {
   id: number;
   title: string;
   completed: boolean;
+  subTasks: SubTask[];
+  comments: TaskComment[];
 };
 
 // DnD задач

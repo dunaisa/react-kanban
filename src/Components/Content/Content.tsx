@@ -1,7 +1,7 @@
 import './Content.css'
 import Column from '../Column/Column';
 import OpenedTask from '../OpenedTask/OpenedTask';
-import { Column as ColumnType, Task } from '@/types/types';
+import { Column as ColumnType, Task, TaskComment } from '@/types/types';
 
 type contentProps = {
   handleAddColumn: () => void;
@@ -9,6 +9,7 @@ type contentProps = {
   onChangeColumnTitle: (id: number, title: string) => void;
   deleteColumn: (id: number) => void;
   addTask: (columnId: number) => void;
+  removeTask: (columnId: number, taskId: number) => void;
   onChangeTaskTitle: (columnId: number, taskId: number, titleTask: string) => void;
   toggleTaskCompletion: (columnId: number, taskId: number) => void;
   onDragStart: (taskId: number, sourceColumnId: number, sourceTaskIndex: number) => void;
@@ -28,6 +29,7 @@ const Content = ({
   onChangeColumnTitle,
   deleteColumn,
   addTask,
+  removeTask,
   onChangeTaskTitle,
   toggleTaskCompletion,
   onDragStart,
@@ -38,7 +40,7 @@ const Content = ({
   closeTask,
   openedTaskId,
   task,
-  columnId
+  columnId,
 }: contentProps) => {
 
   return (
@@ -77,6 +79,7 @@ const Content = ({
                   onChangeColumnTitle={onChangeColumnTitle}
                   deleteColumn={deleteColumn}
                   addTask={addTask}
+                  removeTask={removeTask}
                   onChangeTaskTitle={onChangeTaskTitle}
                   toggleTaskCompletion={toggleTaskCompletion}
                   onDragStart={onDragStart}
@@ -104,7 +107,14 @@ const Content = ({
 
         </div>
 
-        <OpenedTask closeTask={closeTask} openedTaskId={openedTaskId} task={task} columnId={columnId} onChangeTaskTitle={onChangeTaskTitle} />
+        <OpenedTask 
+        closeTask={closeTask}
+        openedTaskId={openedTaskId}
+        task={task}
+        columnId={columnId}
+        onChangeTaskTitle={onChangeTaskTitle}
+        toggleTaskCompletion={toggleTaskCompletion}
+         />
         
       </div>
       
